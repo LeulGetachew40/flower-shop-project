@@ -1,0 +1,49 @@
+-- to install the nestJS command line interface globally
+
+        npm i -g @nestjs/cli
+
+-- to initialize nest js project on the command line
+
+        nest new <project_name>
+
+-- to create a new module (app in DJANGO)
+
+        nest g module <module_name>
+
+-- to create a controller file for the module that we created
+
+        nest g controller <module_name>
+
+-- to create a service file (provider file) for the module that we created
+
+        nest g service <module_name>
+
+npm i --save class-validator class-transformer
+
+
+-- to create everything like controllers, services and modules all at once and also create a REST API
+
+        nest g resource <resourceName>
+
+        *** we will not be using the dto and entites because we are using prisma ***
+
+
+THE WHOLE STRUCTIRE OF THE NEST JS IN A NUTSHELL
+
+THE MAIN APP
+-- the main app just imports all the sub apps
+-- the main app defines the root route on the app.controller.ts
+
+THE MODULES
+
+*** THE EMPLOYEES ***
+
+-- we first define a prisma schema.
+        -- here we define the models we are going to use in the app
+
+-- THE DATABASE MODULE
+        -- we will abstract away the initialization process of the database
+
+        -- we will define the database connection by importing the PrismaClient
+        -- then we will extend that PrismaClient then be able to call their methods
+        -- then we will also 
