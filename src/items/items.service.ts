@@ -3,26 +3,32 @@ import { Prisma } from '@prisma/client'; // for the DTOs
 
 import { DatabaseService } from './../database/database.service';
 
-@Injectable()
+// or they can be instantiated in the constructor function
+@Injectable() // this tells nest js that we can inject this class as a dependency  into other classes
 export class ItemsService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createItemDto: Prisma.ItemsCreateInput) {
     return await this.databaseService.items.create({ data: createItemDto });
   }
 
-  findAll() {
-    return 'here return all items if no query is provided, but filter items if there is a query object';
+  async findAll() {
+    return await this.databaseService.items.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} item`;
+  async findOne(id: string) {
+    return await this.databaseService.items.findUnique({
+      where: { itemID: id },
+    });
   }
 
-  update(id: number, updateItemDto: Prisma.ItemsUpdateInput) {
-    return `This action updates a #${id} item`;
+  async update(id: string, updateItemDto: Prisma.ItemsUpdateInput) {
+    return await this.databaseService.items.update({
+      where: { itemID: id },
+      data: updateItemDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} item`;
+  async remove(id: string) {
+    return await this.databaseService.items.delete({ where: { itemID: id } });
   }
 }

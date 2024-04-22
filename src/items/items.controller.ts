@@ -27,7 +27,7 @@ export class ItemsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.itemsService.findOne(+id);
+    return this.itemsService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class ItemsController {
     @Param('id') id: string,
     @Body() updateItemDto: Prisma.ItemsUpdateInput,
   ) {
-    return this.itemsService.update(+id, updateItemDto);
+    return this.itemsService.update(id, updateItemDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.itemsService.remove(+id);
+    return this.itemsService.remove(id);
   }
 }

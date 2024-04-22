@@ -5,23 +5,30 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["users", "items"]
 }
+
+// try to add 1-1 relationships among discounts and items
 
 model Items {
   itemID        String      @id @default(uuid())
-  name          String      @unique
-  price         Float
+  itemName      String      @unique
+  itemPrice     Float
   stock         Int
   inStock       Boolean
   itemCreatedAt DateTime    @default(now())
   itemUpdatedAt DateTime    @updatedAt
+  itemSlug      String?     @unique
   Discounts     Discounts[]
+
+  @@schema("items")
 }
 
 model Discounts {
@@ -30,6 +37,8 @@ model Discounts {
   item          Items  @relation(fields: [itemID], references: [itemID])
   itemID        String
   promoCode     String
+
+  @@schema("items")
 }
 
 model User {
@@ -37,4 +46,6 @@ model User {
   name        String
   dateOfBirth DateTime
   email       String   @unique
+
+  @@schema("users")
 }
