@@ -16,7 +16,7 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
-  create(@Body() createItemDto: CreateItemDto) {
+  create(@Body() createItemDto: Prisma.ItemsCreateInput) {
     return this.itemsService.create(createItemDto);
   }
 
@@ -31,7 +31,10 @@ export class ItemsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateItemDto: UpdateItemDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateItemDto: Prisma.ItemsUpdateInput,
+  ) {
     return this.itemsService.update(+id, updateItemDto);
   }
 

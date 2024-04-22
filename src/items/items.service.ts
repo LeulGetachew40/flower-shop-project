@@ -6,12 +6,12 @@ import { DatabaseService } from './../database/database.service';
 @Injectable()
 export class ItemsService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createItemDto: Prisma.ItemsCreateInput) {
-    return 'This action adds a new item';
+  async create(createItemDto: Prisma.ItemsCreateInput) {
+    return await this.databaseService.items.create({ data: createItemDto });
   }
 
   findAll() {
-    return `This action returns all items`;
+    return 'here return all items if no query is provided, but filter items if there is a query object';
   }
 
   findOne(id: number) {
