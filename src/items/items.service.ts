@@ -22,9 +22,13 @@ export class ItemsService {
   }
 
   async update(id: string, updateItemDto: Prisma.ItemsUpdateInput) {
+    // this should prevent the user from editting the item's id
+    if (updateItemDto.itemID) {
+      delete updateItemDto.itemID;
+    }
     return await this.databaseService.items.update({
       where: { itemID: id },
-      data: updateItemDto,
+      data: updateItemDto, // add an interceptor here to fix the id issue
     });
   }
 

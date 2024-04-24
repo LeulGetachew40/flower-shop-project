@@ -8,7 +8,6 @@ import { ItemsService } from './items.service';
 import { ItemsController } from './items.controller';
 import { DatabaseModule } from './../database/database.module';
 import { ItemDocumentMiddleware } from './../common/middlewares/item.document.middleware';
-
 @Module({
   imports: [DatabaseModule],
   controllers: [ItemsController],

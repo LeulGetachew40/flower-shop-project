@@ -4,6 +4,9 @@ CREATE SCHEMA IF NOT EXISTS "items";
 -- CreateSchema
 CREATE SCHEMA IF NOT EXISTS "users";
 
+-- CreateEnum
+CREATE TYPE "users"."USERTYPE" AS ENUM ('CUSTOMER', 'ADMIN', 'CLERK');
+
 -- CreateTable
 CREATE TABLE "items"."Items" (
     "itemID" TEXT NOT NULL,
@@ -13,7 +16,7 @@ CREATE TABLE "items"."Items" (
     "inStock" BOOLEAN NOT NULL,
     "itemCreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "itemUpdatedAt" TIMESTAMP(3) NOT NULL,
-    "itemSlug" TEXT NOT NULL,
+    "itemSlug" TEXT,
 
     CONSTRAINT "Items_pkey" PRIMARY KEY ("itemID")
 );
@@ -32,14 +35,19 @@ CREATE TABLE "items"."Discounts" (
 CREATE TABLE "users"."User" (
     "userID" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "dateOfBirth" TIMESTAMP(3) NOT NULL,
+    "dateOfBirth" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "userType" "users"."USERTYPE" NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("userID")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Items_name_key" ON "items"."Items"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Items_itemSlug_key" ON "items"."Items"("itemSlug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "users"."User"("email");

@@ -19,8 +19,8 @@ datasource db {
 
 model Items {
   itemID        String      @id @default(uuid())
-  itemName      String      @unique
-  itemPrice     Float
+  name          String      @unique
+  price         Float
   stock         Int
   inStock       Boolean
   itemCreatedAt DateTime    @default(now())
@@ -44,8 +44,18 @@ model Discounts {
 model User {
   userID      String   @id @default(uuid())
   name        String
-  dateOfBirth DateTime
+  dateOfBirth DateTime @default(now())
   email       String   @unique
+  password    String
+  userType    USERTYPE
+
+  @@schema("users")
+}
+
+enum USERTYPE {
+  CUSTOMER
+  ADMIN
+  CLERK
 
   @@schema("users")
 }
