@@ -6,17 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
-
 import { Prisma } from '@prisma/client';
+import { ItemCreateDto } from './dto/item.create.dto';
+import { ItemUpdateDto } from './dto/item.update.dto';
 
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
-  create(@Body() createItemDto: Prisma.ItemsCreateInput) {
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  create(@Body() createItemDto: ItemCreateDto) {
     return this.itemsService.create(createItemDto);
   }
 
@@ -31,10 +35,8 @@ export class ItemsController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateItemDto: Prisma.ItemsUpdateInput,
-  ) {
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  update(@Param('id') id: string, @Body() updateItemDto: ItemUpdateDto) {
     return this.itemsService.update(id, updateItemDto);
   }
 

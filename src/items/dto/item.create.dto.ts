@@ -1,8 +1,10 @@
-import { Prisma } from '@prisma/client';
-import { IsBoolean, IsInt, Min, Max, IsUUID } from 'class-validator';
-export class ItemCreateDTO implements Partial<Prisma.ItemsCreateInput> {
-  @IsUUID()
-  itemID: string;
+import { IsBoolean, IsInt, Min, Max, IsNotEmpty } from 'class-validator';
+export class ItemCreateDto {
+  @IsNotEmpty()
+  name: string;
+
+  @IsNotEmpty()
+  price: number;
 
   @IsInt()
   @Min(50)
@@ -11,5 +13,8 @@ export class ItemCreateDTO implements Partial<Prisma.ItemsCreateInput> {
 
   @IsBoolean()
   inStock: boolean;
+
+  @IsNotEmpty()
+  itemSlug: string;
 }
 // add more validation here
