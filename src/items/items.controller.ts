@@ -10,7 +10,6 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
-import { Prisma } from '@prisma/client';
 import { ItemCreateDto } from './dto/item.create.dto';
 import { ItemUpdateDto } from './dto/item.update.dto';
 

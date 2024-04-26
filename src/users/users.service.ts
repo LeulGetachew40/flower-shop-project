@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client'; // enforce decoupling here
 import { DatabaseService } from './../database/database.service';
+import { ApiError } from 'src/common/apiError';
 
 // import { validate } from 'class-validator';
 // import { plainToClass } from 'class-transformer';
@@ -28,8 +29,15 @@ export class UsersService {
     return await this.databaseService.user.findMany();
   }
 
-  findOne(id: string) {
-    return this.databaseService.user.findUnique({ where: { userID: id } });
+  async findOne(id: string) {
+    const user = await this.databaseService.user.findUnique({
+      where: { userID: id },
+    });
+    if (!user) {
+      throw new ApiError('User Not Found', 404);
+    } else {
+      return user;
+    }
   }
 
   update(id: string, updateUserDto: Prisma.UserUpdateInput) {

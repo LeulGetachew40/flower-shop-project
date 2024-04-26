@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client'; // for the DTOs
 
 import { DatabaseService } from './../database/database.service';
@@ -16,9 +16,14 @@ export class ItemsService {
   }
 
   async findOne(id: string) {
-    return await this.databaseService.items.findUnique({
+    const item = await this.databaseService.items.findUnique({
       where: { itemID: id },
     });
+    if (!item) {
+      throw new HttpException('Item not Found', HttpStatus.NOT_FOUND);
+    } else {
+      return item;
+    }
   }
 
   async update(id: string, updateItemDto: Prisma.ItemsUpdateInput) {
