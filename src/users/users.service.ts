@@ -11,7 +11,7 @@ import { ApiError } from 'src/common/apiError';
 @Injectable()
 export class UsersService {
   constructor(private readonly databaseService: DatabaseService) {}
-
+  // try to immitate handlerFactory here by instantiating the factory in the cinstructor
   async create(createUserDto: Prisma.UserCreateInput) {
     // const dto = plainToClass(CreateUserDto, createUserDto); // creates an object from the specified class
     // const errors = await validate(dto); // validate checks if the newly cerated object aligns with the class
@@ -22,10 +22,15 @@ export class UsersService {
 
     // determine whether the user already exists or not using their email before saving the user
     // don't accept userID here but rather generate our own
-    return await this.databaseService.user.create({ data: createUserDto });
+    try {
+      return await this.databaseService.user.create({ data: createUserDto });
+    } catch (error) {
+      throw new ApiError('User already exists', 400);
+    }
   }
 
   async findAll() {
+    // implement query object filtering here
     return await this.databaseService.user.findMany();
   }
 
@@ -41,6 +46,7 @@ export class UsersService {
   }
 
   update(id: string, updateUserDto: Prisma.UserUpdateInput) {
+    // fix missing records issue here
     return this.databaseService.user.update({
       where: { userID: id },
       data: updateUserDto,
