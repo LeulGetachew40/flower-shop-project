@@ -7,6 +7,7 @@ export class UserNameGeneratorMiddleware implements NestMiddleware {
     if (!req.body.username) {
       req.body.username = generateUsername('', 3, 15);
     }
+    console.log(req.body.username);
     next();
   }
 }

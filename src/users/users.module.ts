@@ -20,6 +20,6 @@ export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(UserNameGeneratorMiddleware)
-      .forRoutes({ path: '/signup', method: RequestMethod.POST });
+      .forRoutes({ path: 'users', method: RequestMethod.POST }); // here is the problem, adjust the path to meet the users signup to make the middleware work
   }
 }

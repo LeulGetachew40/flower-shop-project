@@ -2,6 +2,9 @@ import { IsEmail, IsEnum, IsNotEmpty, Length } from 'class-validator';
 import { USERTYPE } from '@prisma/client';
 export class CreateUserDto {
   @IsNotEmpty()
+  username: string;
+
+  @IsNotEmpty()
   @Length(1, 50)
   name: string;
 

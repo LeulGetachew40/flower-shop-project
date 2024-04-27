@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login')
+  @Post('/login')
   login(@Body() userSignInDto: UserSignInDto) {
     const { username, password } = userSignInDto;
     return this.authService.signIn(username, password);
