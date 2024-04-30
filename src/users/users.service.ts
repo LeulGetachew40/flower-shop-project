@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client'; // enforce decoupling here
 import { DatabaseService } from './../database/database.service';
 import { ApiError } from 'src/common/apiError';
@@ -25,7 +25,7 @@ export class UsersService {
     try {
       return await this.databaseService.user.create({ data: createUserDto });
     } catch (error) {
-      throw new ApiError('User already exists', 400);
+      throw new ApiError('User already exists', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -39,7 +39,7 @@ export class UsersService {
       where: { userID: id },
     });
     if (!user) {
-      throw new ApiError('User Not Found', 404);
+      throw new ApiError('User Not Found', HttpStatus.BAD_REQUEST);
     } else {
       return user;
     }
