@@ -4,7 +4,7 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { ApiError } from './../apiError';
+import { ApiError } from '../apiError';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

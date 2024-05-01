@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UserSignInDto } from './dto/auth.user.signin.dto';
 import { AuthService } from './auth.service';
-import { ProtectRoute } from './../common/middlewares/authorization.middleware';
+import { ProtectRoute } from './../common/guards/protectRoute.authorization.guards';
 import { CreateUserDto } from './../users/dto/user.create.dto';
 @Controller('auth')
 export class AuthController {

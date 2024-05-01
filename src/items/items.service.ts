@@ -39,4 +39,8 @@ export class ItemsService {
   async remove(id: string) {
     return await this.databaseService.items.delete({ where: { itemID: id } });
   }
+
+  async viewCart() {
+    return 'this is your cart';
+  }
 }

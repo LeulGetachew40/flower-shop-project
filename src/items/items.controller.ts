@@ -8,10 +8,14 @@ import {
   Delete,
   ValidationPipe,
   UsePipes,
+  UseGuards,
+  SetMetadata,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { ItemCreateDto } from './dto/item.create.dto';
 import { ItemUpdateDto } from './dto/item.update.dto';
+import { AuthGuard } from '../common/guards/authGuard.authorzation.guards';
+import { ProtectRoute } from './../common/guards/protectRoute.authorization.guards';
 
 @Controller('items')
 export class ItemsController {
@@ -26,6 +30,14 @@ export class ItemsController {
   @Get()
   findAll() {
     return this.itemsService.findAll();
+  }
+
+  @UseGuards(AuthGuard)
+  @SetMetadata('userType', ['ADMIN', 'CUSTOMER'])
+  @UseGuards(ProtectRoute)
+  @Get('/cart')
+  viewCart() {
+    return this.itemsService.viewCart();
   }
 
   @Get(':id')
