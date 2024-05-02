@@ -10,10 +10,11 @@ import { DatabaseModule } from './../database/database.module';
 import { ItemDocumentMiddleware } from './../common/middlewares/item.document.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'process';
+import { UsersService } from './../users/users.service';
 @Module({
   imports: [DatabaseModule, JwtModule.register({ secret: env.JWT_SECRET })],
   controllers: [ItemsController],
-  providers: [ItemsService],
+  providers: [ItemsService, UsersService],
 })
 export class ItemsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

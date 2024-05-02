@@ -9,14 +9,16 @@ import {
   ValidationPipe,
   UsePipes,
   UseGuards,
-  SetMetadata,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { ItemCreateDto } from './dto/item.create.dto';
 import { ItemUpdateDto } from './dto/item.update.dto';
-import { AuthGuard } from '../common/guards/authGuard.authorzation.guards';
+import {
+  AuthGuard,
+  Roles,
+} from '../common/guards/authGuard.authorzation.guards';
 import { ProtectRoute } from './../common/guards/protectRoute.authorization.guards';
-
+import { Role } from './../auth/role.enum';
 @Controller('items')
 export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
@@ -33,7 +35,7 @@ export class ItemsController {
   }
 
   @UseGuards(AuthGuard)
-  @SetMetadata('userType', ['ADMIN', 'CUSTOMER'])
+  @Roles([Role.ADMIN, Role.CUSTOMER])
   @UseGuards(ProtectRoute)
   @Get('/cart')
   viewCart() {
