@@ -21,7 +21,6 @@ export class AuthGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const [req] = context.getArgs();
-    // figure out how to get the user from the db, because we want to check their userType here too
     const user = await this.userService.findOne(req.user.id);
     if (!user) {
       throw new ApiError(

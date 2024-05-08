@@ -17,5 +17,5 @@ export class CreateUserDto {
   password: string;
 
   @IsEnum(USERTYPE)
-  userType: 'CUSTOMER' | 'ADMIN' | 'CLERK';
+  userType: USERTYPE;
 }

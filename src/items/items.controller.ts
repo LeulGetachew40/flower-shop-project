@@ -5,10 +5,12 @@ import {
   Body,
   Patch,
   Param,
+  Query,
   Delete,
   ValidationPipe,
   UsePipes,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
 import { ItemCreateDto } from './dto/item.create.dto';
@@ -16,7 +18,7 @@ import { ItemUpdateDto } from './dto/item.update.dto';
 import {
   AuthGuard,
   Roles,
-} from '../common/guards/authGuard.authorzation.guards';
+} from './../common/guards/authGuard.authorzation.guards';
 import { ProtectRoute } from './../common/guards/protectRoute.authorization.guards';
 import { Role } from './../auth/role.enum';
 @Controller('items')
@@ -30,8 +32,12 @@ export class ItemsController {
   }
 
   @Get()
-  findAll() {
-    return this.itemsService.findAll();
+  findAll(
+    @Query('page', new ParseIntPipe({ optional: true })) page?: number,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
+  ) {
+    // create pagination functionality here
+    return this.itemsService.findAll(page, limit);
   }
 
   @UseGuards(AuthGuard)

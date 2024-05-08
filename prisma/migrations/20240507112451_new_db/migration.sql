@@ -1,6 +1,25 @@
 -- CreateSchema
 CREATE SCHEMA IF NOT EXISTS "items";
 
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "users";
+
+-- CreateEnum
+CREATE TYPE "users"."USERTYPE" AS ENUM ('CUSTOMER', 'ADMIN', 'CLERK');
+
+-- CreateTable
+CREATE TABLE "users"."User" (
+    "userID" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "username" TEXT,
+    "dateOfBirth" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "userType" "users"."USERTYPE" NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("userID")
+);
+
 -- CreateTable
 CREATE TABLE "items"."Items" (
     "itemID" TEXT NOT NULL,
@@ -24,6 +43,12 @@ CREATE TABLE "items"."Discounts" (
 
     CONSTRAINT "Discounts_pkey" PRIMARY KEY ("discountID")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "users"."User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "users"."User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Items_name_key" ON "items"."Items"("name");
